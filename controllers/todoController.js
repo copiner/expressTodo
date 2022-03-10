@@ -3,8 +3,10 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended:false});
 
 var mongoose = require('mongoose');
-//Connext to the database
-mongoose.connect('mongodb://test:123456@localhost:27017/todo',{useNewUrlParser: true}).then(
+//Connext to the database mongodb://mongo:27017/todos
+//process.env.CONNECTIONSTRING
+console.log(process.env.CONNECTIONSTRING)
+mongoose.connect('mongodb://mongo:27017/todos',{useNewUrlParser: true}).then(
     ()=>{
       console.log("connected to mongoDB")
     },
@@ -24,24 +26,27 @@ Todo.find({},function(err,data){
 });
 */
 module.exports = function(app){
+    //delete
     app.get('/todo',function(req,res){
     	if(req.query.item){
         	  //delete the requested item from mongodb
-        	  Todo.deleteOne({item:req.query.item},function(err,data){
-        	    if(err) throw err;
-		    console.log(data);
-        	    res.render('todo',{todos:data});
-              })
+            Todo.deleteOne({item:req.query.item},function(err,data){
+        	if(err) throw err;
+		console.log(data);
+        	res.render('todo',{todos:data});
+		
+            })
     	} else {
-		//get item from mongodb
-        	  Todo.find({},function(err,data){
-        	    if(err) throw err;
-		    console.log(data);
-        	    res.render('todo',{todos:data});
-        	  })
-    	}
+	    //show
+	    Todo.find({},function(err,data){
+		if(err) throw err;
+		res.render('todo',{todos:data});
+            })	
+
+	}
 
     })
+    //add
     app.post('/todo',urlencodedParser,function(req,res){
     	//get data from the view and add it to mongodb
     	Todo(req.body).save(function(err,data){

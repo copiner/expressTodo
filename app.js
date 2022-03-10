@@ -8,6 +8,6 @@ app.use(express.static('./public'));
 
 todoController(app);
 
-app.listen(3000,function(){
-    console.log('listening at 3000');
+app.listen(8000,function(){
+    console.log('listening at 8000');
 });

@@ -4,8 +4,9 @@
   "description": "express todo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "nodemon app.js",
+      "debug": "nodemon --inspect=0.0.0.0:9229 app.js"
   },
   "keywords": [
     "express",
@@ -20,6 +21,6 @@
     "mongoose": "^5.4.20"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^2.0.15"
   }
 }
